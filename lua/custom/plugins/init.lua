@@ -4,5 +4,12 @@
 -- See the kickstart.nvim README for more information
 return {
 	'windwp/nvim-autopairs',
-	'folke/tokyonight.nvim',
+	{
+		'folke/tokyonight.nvim',
+		transparent = true,
+		styles = {
+			sidebars = "transparent",
+			floats = "transparent",
+		}
+	},
 }

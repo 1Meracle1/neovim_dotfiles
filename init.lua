@@ -72,6 +72,35 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
+  'navarasu/onedark.nvim',
+
+  {
+    "EdenEast/nightfox.nvim",
+    opts = {
+      options = {
+        terminal_colors = true,
+        transparent = false,
+        colorblind = {
+          enable = true,
+          severity = {
+            protan = 1
+          }
+        }
+      },
+      palettes = {
+
+      },
+    }
+  },
+
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    transparent_background = true
+  },
+
+  "xiyaowong/transparent.nvim",
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -135,12 +164,6 @@ require('lazy').setup({
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
-      options = {
-        icons_enabled = true,
-        theme = 'onedark',
-        component_separators = '|',
-        section_separators = '',
-      },
       sections = {
         lualine_c = {
           {
@@ -559,9 +582,14 @@ if not cmp_status_ok then
 end
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
 
-vim.cmd [[colorscheme tokyonight-moon]]
--- vim.cmd [[colorscheme habamax]]
--- vim.cmd [[echo expand('%:p')]]
+vim.cmd [[TransparentEnable]]
+--vim.cmd [[colorscheme tokyonight-moon]]
+--vim.cmd [[colorscheme onedark]]
+vim.cmd.colorscheme "catppuccin"
+--vim.cmd [[ colorscheme nightfox ]]
+
+--vim.cmd [[set background=light]]
+--vim.cmd [[ set background=dark ]]
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

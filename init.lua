@@ -136,20 +136,20 @@ require('lazy').setup({
     -- See `:help lualine.txt`
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = 'onedark',
         component_separators = '|',
         section_separators = '',
-        sections = {
-          lualine_c = {
-            {
-              'filename',
-              file_status = true, -- displays file status (readonly status, modified status)
-              path = 2            -- 0 = just filename, 1 = relative path, 2 = absolute path
-            }
+      },
+      sections = {
+        lualine_c = {
+          {
+            'filename',
+            file_status = true, -- displays file status (readonly status, modified status)
+            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
           }
         }
-      },
+      }
     },
   },
 

@@ -140,6 +140,15 @@ require('lazy').setup({
         theme = 'onedark',
         component_separators = '|',
         section_separators = '',
+        sections = {
+          lualine_c = {
+            {
+              'filename',
+              file_status = true, -- displays file status (readonly status, modified status)
+              path = 2            -- 0 = just filename, 1 = relative path, 2 = absolute path
+            }
+          }
+        }
       },
     },
   },
@@ -550,27 +559,9 @@ if not cmp_status_ok then
 end
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
 
-vim.cmd [[colorscheme habamax]]
-vim.cmd [[echo expand('%:p')]]
+vim.cmd [[colorscheme tokyonight-moon]]
+-- vim.cmd [[colorscheme habamax]]
+-- vim.cmd [[echo expand('%:p')]]
 
-function _G.current_tab()
-  local curr_buf = vim.fn.bufnr()
-  local total = 0
-  local curr_tab
-
-  for i = 1, vim.fn.tabpagenr('$') do
-    total = total + 1
-    for _, bufnr in ipairs(vim.fn.tabpagebuflist(i)) do
-      if bufnr == curr_buf then
-        curr_tab = i
-      end
-    end
-  end
-
-  return string.format('(%d of %d)', curr_tab, total)
-end
-
--- vim.opt.titlestring = [[%f %h%m%r%w - %{v:progname} %{luaeval('current_tab()')}]]
--- vim.o.titlestring = [[%{expand('%:p')}]]
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

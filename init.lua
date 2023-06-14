@@ -101,6 +101,13 @@ require('lazy').setup({
 
   "xiyaowong/transparent.nvim",
 
+  --Cmake
+  --"cdelledonne/vim-cmake",
+  --'antoinemadec/FixCursorHold.nvim',
+  "nvim-lua/plenary.nvim",
+  "Shatur/neovim-tasks",
+  "fedorenchik/qt-support.vim",
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -229,6 +236,30 @@ require('lazy').setup({
   { import = 'custom.plugins' },
 }, {})
 
+--Cmake
+local Path = require('plenary.path')
+require('tasks').setup({
+  default_params = {
+    -- Default module parameters with which `neovim.json` will be created.
+    cmake = {
+      cmd = 'cmake',                                                         -- CMake executable to use, can be changed using `:Task set_module_param cmake cmd`.
+      build_dir = tostring(Path:new('{cwd}', 'build', '{os}-{build_type}')), -- Build directory. The expressions `{cwd}`, `{os}` and `{build_type}` will be expanded with the corresponding text values. Could be a function that return the path to the build directory.
+      build_type = 'Debug',                                                  -- Build type, can be changed using `:Task set_module_param cmake build_type`.
+      dap_name = 'lldb',                                                     -- DAP configuration name from `require('dap').configurations`. If there is no such configuration, a new one with this name as `type` will be created.
+      args = {                                                               -- Task default arguments.
+        configure = { '-D', 'CMAKE_EXPORT_COMPILE_COMMANDS=1', '-G', 'Ninja' },
+      },
+    },
+  },
+  save_before_run = true,      -- If true, all files will be saved before executing a task.
+  params_file = 'neovim.json', -- JSON file to store module and task parameters.
+  quickfix = {
+    pos = 'botright',          -- Default quickfix position.
+    height = 12,               -- Default height.
+  },
+  dap_open_command = function() return require('dap').repl.open() end,
+})
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -326,6 +357,21 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+
+-- Cmake
+vim.keymap.set('', '<leader>cg', ':Task start cmake configure<cr>', {})
+vim.keymap.set('', '<leader>cr', ':Task start cmake run<cr>', {})
+--close bottom buffer
+--vim.keymap.set('', '<leader>cc', '<c-w>j<c-w>q', {})
+
+--vim.keymap.set('', '<leader>cg', ':CMakeGenerate<cr>', {})
+--vim.keymap.set('', '<leader>cb', ':CMakeBuild<cr>', {})
+--vim.keymap.set('', '<leader>cq', ':CMakeClose<cr>', {})
+--vim.keymap.set('', '<leader>cc', ':CMakeClose<cr>', {})
+
+-- Cmake
+--vim.cmd [[let g:cmake_link_compile_commands = '1']]
+--vim.cmd [[let g:cmake_build_dir_location = '.']]
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -430,8 +476,8 @@ local on_attach = function(_, bufnr)
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
-  nnoremap("<C-d>", "<C-d>zz")
-  nnoremap("<C-u>", "<C-u>zz")
+  nmap("<C-d>", "<C-d>zz")
+  nmap("<C-u>", "<C-u>zz")
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')

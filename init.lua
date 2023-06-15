@@ -360,9 +360,10 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 
 -- Cmake
 vim.keymap.set('', '<leader>cg', ':Task start cmake configure<cr>', {})
+vim.keymap.set('', '<leader>cb', ':Task start cmake build<cr>', {})
 vim.keymap.set('', '<leader>cr', ':Task start cmake run<cr>', {})
 --close bottom buffer
---vim.keymap.set('', '<leader>cc', '<c-w>j<c-w>q', {})
+vim.keymap.set('', '<leader>cc', '<c-w>j<c-w>:q<cr>', {})
 
 --vim.keymap.set('', '<leader>cg', ':CMakeGenerate<cr>', {})
 --vim.keymap.set('', '<leader>cb', ':CMakeBuild<cr>', {})

@@ -477,8 +477,10 @@ local on_attach = function(_, bufnr)
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
-  nmap("<C-d>", "<C-d>zz")
-  nmap("<C-u>", "<C-u>zz")
+  --nmap("<C-d>", "<C-d>zz")
+  --nmap("<C-u>", "<C-u>zz")
+  vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'remapped half-page up with centerting' });
+  vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'remapped half-page down with centerting' });
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
